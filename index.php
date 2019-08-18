@@ -7,7 +7,7 @@ namespace DOMAINGEN;
 
 const DEBUG = true;
 
-global $datasets, $dataset_names, $primaries, $secondaries, $trinaries, $domains;
+global $datasets, $dataset_names, $primaries, $secondaries, $trinaries, $domains, $search_url;
 $datasets = $dataset_names = $primaries = $secondaries = $trinaries = $domains = array();
 
 $datasets_dir = __DIR__ . '/datasets';
@@ -56,7 +56,7 @@ function datasets_dir_filter( $filename ) {
  * The main function
  */
 function render( $datasets_dir ) {
-	global $datasets, $dataset_names, $primaries, $secondaries, $trinaries, $domains;
+	global $datasets, $dataset_names, $primaries, $secondaries, $trinaries, $domains, $search_url;
 	$dataset_files = scandir( $datasets_dir, true );
 	$dataset_files = array_filter( $dataset_files, 'DOMAINGEN\datasets_dir_filter' );
 
@@ -72,14 +72,15 @@ function render( $datasets_dir ) {
 
 	/* Process data */
 	if ( isset( $_REQUEST['primary'] ) ) {
-		$primaries   = array_slice( $datasets[ $_REQUEST['primary'] ], 0, 50 );
-		$secondaries = array_slice( $datasets[ $_REQUEST['secondary'] ], 0, 50 );
-		$trinaries   = array_slice( $datasets[ $_REQUEST['trinary'] ], 0, 50 );
+		$primaries   = array_slice( $datasets[ $_REQUEST['primary'] ], 0, 3000 );
+		$secondaries = array_slice( $datasets[ $_REQUEST['secondary'] ], 0, 500 );
+		$trinaries   = array_slice( $datasets[ $_REQUEST['trinary'] ], 0, 500 );
 
 		foreach ( $primaries as $primary ) {
 			foreach ( $secondaries as $secondary ) {
 				foreach ( $trinaries as $trinary ) {
 					$domains[] = str_replace( ' ', '', strtolower( $primary . $secondary . $trinary ) );
+					//$domains[] = str_replace( ' ', '', strtolower( $primary . $secondary ) );
 				}
 			}
 		}
@@ -124,6 +125,13 @@ render( $datasets_dir );
 			var results = document.execCommand("copy");
 		}
 	</script>
+
+	<script>
+		var datasets = <?php echo json_encode( $datasets ); ?>;
+		var domains = <?php echo json_encode( $domains ); ?>;
+	</script>
+
+	?>
 </head>
 
 <body id="page-top">
@@ -167,8 +175,8 @@ render( $datasets_dir );
 						<?php
 						foreach ( $dataset_names as $name ) {
 							$selected = ( isset( $_REQUEST['primary'] ) && $name === $_REQUEST['primary'] ) ? ' selected' : '';
-							if ( ! isset( $_REQUEST['primary'] ) ) {
-								$name = 'cities';
+							if ( ! isset( $_REQUEST['primary'] ) && 'cities' == $name ) {
+								$selected = ' selected';
 							}
 							echo '<option value="' . $name . '" ' . $selected . '>' . get_nicename( $name ) . '</option>';
 						}
@@ -185,8 +193,8 @@ render( $datasets_dir );
 						<?php
 						foreach ( $dataset_names as $name ) {
 							$selected = ( isset( $_REQUEST['secondary'] ) && $name === $_REQUEST['secondary'] ) ? ' selected' : '';
-							if ( ! isset( $_REQUEST['secondary'] ) ) {
-								$name = 'publications';
+							if ( ! isset( $_REQUEST['secondary'] ) && 'publications' == $name ) {
+								$selected = ' selected';
 							}
 							echo '<option value="' . $name . '" ' . $selected . '>' . get_nicename( $name ) . '</option>';
 						}
@@ -203,8 +211,8 @@ render( $datasets_dir );
 						<?php
 						foreach ( $dataset_names as $name ) {
 							$selected = ( isset( $_REQUEST['trinary'] ) && $name === $_REQUEST['trinary'] ) ? ' selected' : '';
-							if ( ! isset( $_REQUEST['trinary'] ) ) {
-								$name = 'tlds';
+							if ( ! isset( $_REQUEST['trinary'] ) && 'tlds' == $name ) {
+								$selected = ' selected';
 							}
 							echo '<option value="' . $name . '" ' . $selected . '>' . get_nicename( $name ) . '</option>';
 						}
@@ -222,19 +230,19 @@ render( $datasets_dir );
 	<section id="section-results">
 		<div class="row">
 			<div class="col-lg-8 mx-auto">
-				<label for="results"><h2>Results</h2></label>
+				<label for="results"><h2><?php echo count($domains);?> Results</h2></label>
 				<button onclick="copyToClipboard()">Copy</button>
 				<button>
 					<a target="_blank" href="<?php echo $search_url; ?>">Search</a>
 				</button>
 			</div>
 			<div class="col-lg-8 mx-auto">
-				<textarea id="results" name="results" rows=100>
-				<?php
-				if ( isset( $_REQUEST['primary'] ) ) {
-					echo implode( ' ', $domains );
-				}
-				?>
+				<textarea id="results" name="results" rows=10>
+<?php
+if ( isset( $_REQUEST['primary'] ) ) {
+	echo implode( ' ', $domains );
+}
+?>
 			</textarea>
 			</div>
 		</div>
