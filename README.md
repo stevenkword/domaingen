@@ -1,10 +1,10 @@
-# [Start Bootstrap - Scrolling Nav](https://startbootstrap.com/template-overviews/scrolling-nav/)
+# [Start Bootstrap - DomainGen](https://startbootstrap.com/template-overviews/scrolling-nav/)
 
-[Scrolling Nav](http://startbootstrap.com/template-overviews/scrolling-nav/) is an unstyled one page starter template with a collapsing, smooth scrolling navigation bar for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).
+[DomainGen](http://startbootstrap.com/template-overviews/scrolling-nav/) is an unstyled one page starter template with a collapsing, smooth DomainGenigation bar for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/).
 
 ## Preview
 
-[![Scrolling Nav Preview](https://startbootstrap.com/assets/img/templates/scrolling-nav.jpg)](https://blackrockdigital.github.io/startbootstrap-scrolling-nav/)
+[![DomainGen Preview](https://startbootstrap.com/assets/img/templates/scrolling-nav.jpg)](https://blackrockdigital.github.io/startbootstrap-scrolling-nav/)
 
 **[View Live Preview](https://blackrockdigital.github.io/startbootstrap-scrolling-nav/)**
 
