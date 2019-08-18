@@ -5,10 +5,12 @@
 
 namespace DOMAINGEN;
 
-const DEBUG = false;
+const DEBUG = true;
 
-$datasets_dir  = __DIR__ . '/datasets';
-$dataset_files = scandir( $datasets_dir, true );
+global $datasets, $dataset_names, $primaries, $secondaries, $trinaries, $domains;
+$datasets = $dataset_names = $primaries = $secondaries = $trinaries = $domains = array();
+
+$datasets_dir = __DIR__ . '/datasets';
 
 /**
  * Debug output
@@ -24,7 +26,7 @@ function get_nicename( $name ) {
 /**
  * Debug output
  */
-function debug( $data ) {
+function debug( $data, $die = false ) {
 	if ( true !== DEBUG ) {
 		return;
 	}
@@ -37,6 +39,9 @@ function debug( $data ) {
 			echo $data;
 			break;
 	}
+	if ( $die ) {
+		die( 'END DEBUG' );
+	}
 	echo '</br><br/>';
 }
 
@@ -46,39 +51,46 @@ function debug( $data ) {
 function datasets_dir_filter( $filename ) {
 	return strpos( $filename, '.json' );
 }
-$dataset_files = array_filter( $dataset_files, 'DOMAINGEN\datasets_dir_filter' );
 
-$count    = 0;
-$datasets = array();
-foreach ( $dataset_files as $file ) {
-	$dataset_file = $datasets_dir . '/' . $file;
-	// debug( $file );
-	$dataset_name              = strtolower( str_replace( '.json', '', $file ) );
-	$datasets[ $dataset_name ] = json_decode( file_get_contents( $dataset_file ) );
-}
+/**
+ * The main function
+ */
+function render( $datasets_dir ) {
+	global $datasets, $dataset_names, $primaries, $secondaries, $trinaries, $domains;
+	$dataset_files = scandir( $datasets_dir, true );
+	$dataset_files = array_filter( $dataset_files, 'DOMAINGEN\datasets_dir_filter' );
 
-ksort( $datasets );
-// debug( $datasets );
-$dataset_names = array_keys( $datasets );
-debug( $datasets['tlds'] );
-
-/* Process data */
-$domains = array();
-if ( isset( $_REQUEST['primary'] ) ) {
-	$primaries   = array_slice( $datasets[ $_REQUEST['primary'] ], 0, 50 );
-	$secondaries = array_slice( $datasets[ $_REQUEST['secondary'] ], 0, 50 );
-	$tld         = $_REQUEST['tld'];
-
-	foreach ( $primaries as $primary ) {
-		foreach ( $secondaries as $secondary ) {
-			$domains[] = str_replace( ' ', '', $primary . $secondary . $tld );
-		}
+	$count = 0;
+	foreach ( $dataset_files as $file ) {
+		$dataset_file              = $datasets_dir . '/' . $file;
+		$dataset_name              = strtolower( str_replace( '.json', '', $file ) );
+		$datasets[ $dataset_name ] = json_decode( file_get_contents( $dataset_file ) );
 	}
 
-	$comma_separated = implode(",", $domains);
-	$url_base = 'https://www.namecheap.com/domains/registration/results.aspx?type=beast&';
-	$search_url = $url_base . http_build_query( array( 'domain' => $comma_separated ) );
+	ksort( $datasets );
+	$dataset_names = array_keys( $datasets );
+
+	/* Process data */
+	if ( isset( $_REQUEST['primary'] ) ) {
+		$primaries   = array_slice( $datasets[ $_REQUEST['primary'] ], 0, 50 );
+		$secondaries = array_slice( $datasets[ $_REQUEST['secondary'] ], 0, 50 );
+		$trinaries   = array_slice( $datasets[ $_REQUEST['trinary'] ], 0, 50 );
+
+		foreach ( $primaries as $primary ) {
+			foreach ( $secondaries as $secondary ) {
+				foreach ( $trinaries as $trinary ) {
+					$domains[] = str_replace( ' ', '', strtolower( $primary . $secondary . $trinary ) );
+				}
+			}
+		}
+
+		$comma_separated = implode( ',', $domains );
+		$url_base        = 'https://www.namecheap.com/domains/registration/results.aspx?type=beast&';
+		$search_url      = $url_base . http_build_query( array( 'domain' => $comma_separated ) );
+	}
 }
+
+render( $datasets_dir );
 ?>
 
 <!DOCTYPE html>
@@ -140,7 +152,7 @@ if ( isset( $_REQUEST['primary'] ) ) {
 	</nav>
 
 	<header class="bg-primary text-white">
-		<form action="index.php" method="POST">
+		<form action="index.php" method="GET">
 		<div class="container text-center">
 			<h1>Domain search, simplified.</h1>
 		</div>
@@ -155,6 +167,9 @@ if ( isset( $_REQUEST['primary'] ) ) {
 						<?php
 						foreach ( $dataset_names as $name ) {
 							$selected = ( isset( $_REQUEST['primary'] ) && $name === $_REQUEST['primary'] ) ? ' selected' : '';
+							if ( ! isset( $_REQUEST['primary'] ) ) {
+								$name = 'cities';
+							}
 							echo '<option value="' . $name . '" ' . $selected . '>' . get_nicename( $name ) . '</option>';
 						}
 						?>
@@ -170,6 +185,9 @@ if ( isset( $_REQUEST['primary'] ) ) {
 						<?php
 						foreach ( $dataset_names as $name ) {
 							$selected = ( isset( $_REQUEST['secondary'] ) && $name === $_REQUEST['secondary'] ) ? ' selected' : '';
+							if ( ! isset( $_REQUEST['secondary'] ) ) {
+								$name = 'publications';
+							}
 							echo '<option value="' . $name . '" ' . $selected . '>' . get_nicename( $name ) . '</option>';
 						}
 						?>
@@ -181,10 +199,13 @@ if ( isset( $_REQUEST['primary'] ) ) {
 					<label for="tld">TLD</label>
 				</div>
 				<div class="col-75">
-					<select id="tld" name="tld">
+				<select id="trinary" name="trinary">
 						<?php
-						foreach ( $datasets['tlds'] as $name ) {
-							$selected = ( isset( $_REQUEST['tld'] ) && $name === $_REQUEST['tld'] ) ? ' selected' : '';
+						foreach ( $dataset_names as $name ) {
+							$selected = ( isset( $_REQUEST['trinary'] ) && $name === $_REQUEST['trinary'] ) ? ' selected' : '';
+							if ( ! isset( $_REQUEST['trinary'] ) ) {
+								$name = 'tlds';
+							}
 							echo '<option value="' . $name . '" ' . $selected . '>' . get_nicename( $name ) . '</option>';
 						}
 						?>
@@ -208,15 +229,13 @@ if ( isset( $_REQUEST['primary'] ) ) {
 				</button>
 			</div>
 			<div class="col-lg-8 mx-auto">
-				<textarea id="results" name="results" rows=100><?php
+				<textarea id="results" name="results" rows=100>
+				<?php
 				if ( isset( $_REQUEST['primary'] ) ) {
-					foreach ( $primaries as $primary ) {
-						foreach ( $secondaries as $secondary ) {
-							echo str_replace( ' ', '', $primary . $secondary . $tld ) . "\n";
-						}
-					}
+					echo implode( ' ', $domains );
 				}
-			?></textarea>
+				?>
+			</textarea>
 			</div>
 		</div>
 	</section>
@@ -277,6 +296,7 @@ if ( isset( $_REQUEST['primary'] ) ) {
 
 	<!-- Custom JavaScript for this theme -->
 	<script src="js/scrolling-nav.js"></script>
+	<script src="js/domaingen.js"></script>
 
 </body>
 
