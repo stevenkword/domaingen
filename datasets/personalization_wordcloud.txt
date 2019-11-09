@@ -1,0 +1,104 @@
+Summary
+Personalization engine vendors are adapting to better meet the needs of marketing leaders. They’re focusing solutions on methods to increase customer success, deepening customer data management functionality and expanding support for personalized customer experience.
+
+Table Of Contents
+Market Definition/Description
+
+Magic Quadrant
+
+Vendor Strengths and Cautions
+Acquia
+Adobe
+Boxever
+Certona
+Dynamic Yield
+Emarsys
+Episerver
+Evergage
+IgnitionOne
+Monetate
+Oracle
+Qubit
+Reflektion
+RichRelevance
+Vendors Added and Dropped
+Added
+Dropped
+Inclusion and Exclusion Criteria
+
+Evaluation Criteria
+
+Ability to Execute
+Ability to Execute Criteria
+Completeness of Vision
+Quadrant Descriptions
+Leaders
+Challengers
+Visionaries
+Niche Players
+Context
+
+Market Overview
+
+Gartner Recommended Reading
+
+Ability to Execute
+Completeness of Vision
+
+
+Maximize the Impact of Personalization
+ Personalization with the highest impact on consumers, chart of percentage of customers who consider help type important
+Organizations that focus their personalized messaging around helping consumers can expect 16% more impact on commercial outcomes than those that don't
+Personalization efforts can go too far, especially as consumer anxiety around data collection and use persists. Leaders struggle to find a balance between privacy and the promise of personalization, while also keeping up with emerging technology and growing data sources.
+
+Prioritizing high-value opportunities starts with understanding how personalization can be used to help the buyer to complete their purchase or make a decision. Our 2Q19 Executive Guidance offers lessons learned and proven examples of high-impact personalization.
+
+Read Executive Guidance to gain insight on:
+How customers respond to personalization
+
+The potential risks of personalized experiences based purely on incorporating tactics that demonstrate recognition of personal characteristics
+
+How to rightsize data collection and build effective delivery tools
+
+Amazon Personalize is a machine learning service that makes it easy for developers to create individualized recommendations for customers using their applications.
+
+Machine learning is being increasingly used to improve customer engagement by powering personalized product and content recommendations, tailored search results, and targeted marketing promotions. However, developing the machine-learning capabilities necessary to produce these sophisticated recommendation systems has been beyond the reach of most organizations today due to the complexity. Amazon Personalize allows developers with no prior machine learning experience to easily build sophisticated personalization capabilities into their applications, using machine learning technology perfected from years of use on Amazon.com.
+
+With Amazon Personalize, you provide an activity stream from your application – clicks, page views, signups, purchases, and so forth – as well as an inventory of the items you want to recommend, such as articles, products, videos, or music. You can also choose to provide Amazon Personalize with additional demographic information from your users such as age, or geographic location. Amazon Personalize will process and examine the data, identify what is meaningful, select the right algorithms, and train and optimize a personalization model that is customized for your data.
+All data analyzed by Amazon Personalize is kept private and secure, and only used for your customized recommendations. You can start serving personalized recommendations via a simple API call. You pay only for what you use, and there are no minimum fees and no upfront commitments.
+
+Amazon Personalize is like having your own Amazon.com machine learning personalization team at your disposal, 24 hours a day.
+Benefits
+Create high-quality recommendations
+Delivering personalization to individuals at scale requires a combination of the right data and the right technology. The algorithms used by Amazon Personalize are designed to overcome common problems when creating custom recommendations – such as new users with no data, popularity biases, and evolving intent of users – to deliver high-quality recommendations that respond to specific needs, preferences, and behavior of your users.
+
+
+
+Own the moment with real-time recommendations
+Timing is everything. If a customer has spent time browsing products on your site, you need to understand what they're looking for and respond with the right recommendations before they move on to another site. Amazon Personalize can blend real-time user activity data with existing user profile and product information to identify the right product recommendations for your users at that moment. With Amazon Personalize you can also easily add real-time personalization to your applications, to surface the most relevant video or article to a user.
+Personalize every touchpoint along the user journey
+Amazon Personalize enables companies to provide a cohesive and unique experience for every user across all channels and devices. Personalized recommendations from the model can be easily integrated into websites, mobile apps, or content management and email marketing systems, via a simple API call. Everything from on-site search, product sorting, recommendations and offers and can be tailored to individual users.
+Deliver personalization within days, not months
+With Amazon Personalize, you can generate a custom personalization model in just a few clicks. Amazon Personalize automates and accelerates the complex machine learning tasks required to build, train, tune, and deploy a personalization model – so you can start delivering relevant experiences for your users quickly.
+How it works
+product-page-diagram_amazon_personalize_how-it-works
+Use cases
+Personalized recommendations
+Product and content recommendations tailored to a user’s profile and habits are more likely to result in a conversion. Rather than providing a single, uniform experience, Amazon Personalize can help applications and websites tailor content to a user’s behavior, history, and preferences.
+
+This helps companies provide visitors with the content they are looking for, better address their needs, and boost engagement. For example, a video streaming website can help users discover additional shows that they may be interested in by providing recommendations on the home screen based on past viewing habits and demographics. Once users begin to drill down into individual programs, similar content within the same genre that they may be interested in can be also be displayed. Throughout the user experience, Amazon Personalize is increasing the odds that users find content they will watch and enjoy.
+Yamaha Corporation_web
+"Amazon Personalize saves us up to 60% of the time needed to set up and tune the infrastructure and algorithms for our machine learning models when compared to building and configuring the environment on our own. It is ideal for both small developer teams who are trying to build the case for ML and large teams who are trying to iterate rapidly at reasonable cost. Even better, we expect Amazon Personalize to be more accurate than other recommender systems, allowing us to delight our customers with highly personalized product suggestions during their shopping experience, which we believe will increase our average order value and the total number of orders."
+Ishwar Bharbhari, Director of Information Technology, Yamaha Corporation of America
+
+Personalized search
+Many online users are frustrated by irrelevant search results and the inability to find the specific item they’re looking for. For an optimal user experience, search results should consider each user’s preferences and intent to surface products that are relevant to the individual, not just to the search term. Amazon Personalize can improve site search results for individual users by reranking search results using the behavioral data from past application interactions for that user. For example, an eCommerce retailer can personalize search results — leveraging a shopper’s recent views, purchase history, and preferences to boost product discovery and customer satisfaction.
+600x400_Zola_Logo
+"Wedding planning isn’t easy. We want to help couples to select gifts or services that best match their situation, styles, interests and preferences. Until now, this has been done sparsely either via rule-based ranking, popularity, or more recently via a similarity model which are calculated offline. Amazon Personalize provides us with the state-of-the-art algorithms and an end-to-end personalization solution that would enable us to respond to customer actions in real-time. Being a small team, using Amazon Personalize would allow us to get to a place that would have otherwise taken a much larger team, and likely 12-18 months development time if not more."
+Stephane Bailliez, VP of Engineering - Zola.com
+
+Personalized notifications
+Marketing promotions based on a user’s behavior are more likely to convert because they align to their interests and context. Amazon Personalize helps ensure that each user receives the most relevant marketing communication, so you can better reach them with the right message at the right time. For example, a retailer can use Amazon Personalize to select the most appropriate mobile app notification to send based on a user’s location, buying habits, and discount amounts that have previously driven them to act rather than simply sending a generic promotion and hoping for the best.
+dominos_logo
+"The customer is at the heart of everything we do at Domino's and we are working relentlessly to improve and enhance their experience. Using Amazon Personalize, we are able to achieve personalization at scale across our entire customer base, which was previously impossible. Amazon Personalize enables us to apply context about individual customers and their circumstances, and deliver customized communications such as special deals and offers through our digital channels.."
+Mallika Krishnamurthy, Global Head, Strategy & Insights - Domino's Pizza Enterprises
